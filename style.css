@@ -1,0 +1,302 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f7f9ff;
+    color: #202b45;
+}
+
+.navbar {
+    height: 75px;
+    padding: 0 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    box-shadow: 0 2px 12px #0000000c;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #172c55;
+    text-decoration: none;
+}
+
+.logo span {
+    color: #3478f6;
+}
+
+nav {
+    display: flex;
+    gap: 35px;
+}
+
+nav a {
+    color: #34415c;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #3478f6;
+}
+
+.menu-btn {
+    display: none;
+    font-size: 25px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.hero {
+    min-height: 480px;
+    padding: 80px 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 35px;
+    background: linear-gradient(120deg, #eaf1ff, #f7f9ff);
+}
+
+.hero-content {
+    max-width: 550px;
+}
+
+.tag {
+    color: #3478f6;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 18px;
+}
+
+.hero h1 {
+    font-size: 55px;
+    line-height: 1.15;
+    margin-bottom: 20px;
+}
+
+.hero h1 span {
+    color: #3478f6;
+}
+
+.description {
+    color: #64718a;
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+.main-btn, .tool-btn {
+    display: inline-block;
+    padding: 14px 24px;
+    background: #3478f6;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.main-btn:hover, .tool-btn:hover {
+    background: #185bd0;
+}
+
+.hero-image {
+    width: 310px;
+    min-height: 250px;
+    background: white;
+    border-radius: 25px;
+    box-shadow: 0 15px 45px #3478f622;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.document-icon {
+    font-size: 85px;
+}
+
+.hero-image h2 {
+    color: #3478f6;
+}
+
+.hero-image p {
+    color: #77839a;
+}
+
+.tools-section {
+    padding: 80px 8%;
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.section-heading h2, .about-section h2 {
+    font-size: 34px;
+    margin-bottom: 12px;
+}
+
+.section-heading p:last-child {
+    color: #77839a;
+}
+
+.tools-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+}
+
+.tool-card {
+    background: white;
+    padding: 30px 22px;
+    border-radius: 15px;
+    box-shadow: 0 5px 25px #182c5010;
+    transition: 0.3s;
+}
+
+.tool-card:hover {
+    transform: translateY(-7px);
+}
+
+.tool-icon {
+    width: 60px;
+    height: 60px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    font-size: 30px;
+    margin-bottom: 22px;
+}
+
+.blue { background: #e7efff; }
+.purple { background: #f0e9ff; }
+.orange { background: #fff0df; }
+.green { background: #e5f8ed; }
+
+.tool-card h3 {
+    margin-bottom: 12px;
+}
+
+.tool-card p {
+    color: #77839a;
+    font-size: 14px;
+    line-height: 1.7;
+    min-height: 70px;
+    margin-bottom: 20px;
+}
+
+.tool-btn {
+    font-size: 13px;
+    padding: 11px 14px;
+}
+
+.about-section {
+    text-align: center;
+    padding: 70px 8%;
+    background: #edf3ff;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    margin-top: 40px;
+}
+
+.features h3 {
+    margin: 12px 0;
+}
+
+.features p {
+    color: #77839a;
+    font-size: 14px;
+}
+
+footer {
+    background: #172c55;
+    color: white;
+    text-align: center;
+    padding: 35px;
+    line-height: 2;
+}
+
+footer .logo {
+    color: white;
+}
+
+footer p {
+    color: #c4d0e8;
+}
+
+@media (max-width: 900px) {
+    .tools-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .navbar {
+        padding: 0 5%;
+    }
+
+    .menu-btn {
+        display: block;
+    }
+
+    nav {
+        display: none;
+        position: absolute;
+        top: 75px;
+        left: 0;
+        width: 100%;
+        background: white;
+        padding: 25px;
+        flex-direction: column;
+        z-index: 10;
+    }
+
+    nav.active {
+        display: flex;
+    }
+
+    .hero {
+        padding: 60px 7%;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero h1 {
+        font-size: 40px;
+    }
+
+    .hero-image {
+        width: 100%;
+    }
+
+    .tools-section {
+        padding: 60px 6%;
+    }
+
+    .tools-container {
+        grid-template-columns: 1fr;
+    }
+
+    .features {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+

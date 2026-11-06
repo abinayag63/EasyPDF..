@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyPDF - Free PDF Tools</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="navbar">
+    <a href="/" class="logo">Easy<span>PDF</span></a>
+
+    <button class="menu-btn" id="menuBtn">☰</button>
+
+<nav id="navLinks">
+    <a href="#home">Home</a>
+    <a href="#tools">PDF Tools</a>
+    <a href="#about">About</a>
+    
+</nav>
+</header>
+
+<section class="hero" id="home">
+    <div class="hero-content">
+        <p class="tag">YOUR FREE PDF TOOLKIT</p>
+
+        <h1>Make Your Files<br>
+            <span>PDF Ready!</span>
+        </h1>
+
+        <p class="description">
+            Convert photos and Word documents into PDF files.
+            Crop, combine and download your files easily.
+        </p>
+
+        <a href="#tools" class="main-btn">Explore PDF Tools →</a>
+    </div>
+
+    <div class="hero-image">
+        <div class="document-icon">📄</div>
+        <h2>EasyPDF</h2>
+        <p>Simple. Fast. Free.</p>
+    </div>
+</section>
+
+<section class="tools-section" id="tools">
+
+    <div class="section-heading">
+        <p class="tag">OUR SERVICES</p>
+        <h2>Choose Your PDF Tool</h2>
+        <p>Everything you need in one place.</p>
+    </div>
+
+    <div class="tools-container">
+
+        <div class="tool-card">
+            <div class="tool-icon blue">📷</div>
+            <h3>Photo to PDF</h3>
+            <p>Convert JPG and PNG photos into PDF documents.</p>
+            <a href="/photo" class="tool-btn">Convert Photo →</a>
+        </div>
+
+        <div class="tool-card">
+            <div class="tool-icon purple">✂️</div>
+            <h3>Crop Photo</h3>
+            <p>Crop unwanted areas and adjust your photos.</p>
+            <a href="/photo" class="tool-btn">Crop Photo →</a>
+        </div>
+
+        <div class="tool-card">
+            <div class="tool-icon orange">📝</div>
+            <h3>Word to PDF</h3>
+            <p>Convert Word documents into PDF format easily.</p>
+            <a href="/word" class="tool-btn">Convert Word →</a>
+        </div>
+
+        <div class="tool-card">
+            <div class="tool-icon green">📚</div>
+            <h3>Multiple Photos to PDF</h3>
+            <p>Combine multiple photos into one PDF file.</p>
+            <a href="/photo" class="tool-btn">Combine Photos →</a>
+        </div>
+
+    </div>
+</section>
+
+<section class="about-section" id="about">
+    <h2>Why Choose EasyPDF?</h2>
+
+    <div class="features">
+        <div>⚡ <h3>Fast</h3><p>Quick file conversion.</p></div>
+        <div>🔒 <h3>Privacy</h3><p>Secure file handling.</p></div>
+        <div>📱 <h3>Responsive</h3><p>Works on mobile and laptop.</p></div>
+        <div>💯 <h3>Easy to Use</h3><p>Simple interface for everyone.</p></div>
+    </div>
+</section>
+
+<footer>
+    <a href="/" class="logo">Easy<span>PDF</span></a>
+    <p>© <span id="year"></span> EasyPDF. All rights reserved.</p>
+    <p>Convert your files with ease.</p>
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EasyPDF</title>
+</head>
+<body style="background-color: lightblue; text-align: center; padding: 100px; font-family: Arial;">
+
+
+    <p>Photo to PDF | Word to PDF | Crop Photo</p>
+
+    <button>Start Converting</button>
+
+</body>
+</html>

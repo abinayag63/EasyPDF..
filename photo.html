@@ -1,0 +1,361 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Photo to PDF - EasyPDF</title>
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5ff;
+            margin: 0;
+            color: #243451;
+        }
+
+        header {
+            background: white;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a {
+            color: #3478f6;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px #00000010;
+        }
+
+        h1 {
+            text-align: center;
+            color: #3478f6;
+        }
+
+        .upload-box {
+            border: 2px dashed #3478f6;
+            padding: 30px;
+            text-align: center;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+
+        input {
+            margin-top: 15px;
+        }
+
+        .preview {
+            max-height: 400px;
+            margin: 20px auto;
+            display: block;
+        }
+
+        .preview img {
+            max-width: 100%;
+            display: block;
+        }
+
+        button {
+            padding: 12px 20px;
+            margin: 7px;
+            border: none;
+            border-radius: 7px;
+            background: #3478f6;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #185bd0;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .photos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .photo-item {
+            border: 1px solid #ddd;
+            padding: 8px;
+            border-radius: 8px;
+            width: 120px;
+            text-align: center;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 90px;
+            object-fit: contain;
+        }
+
+        .photo-item button {
+            padding: 6px;
+            font-size: 12px;
+        }
+
+        .back {
+            color: #3478f6;
+            text-decoration: none;
+        }
+
+        @media(max-width: 600px) {
+            .container {
+                margin: 15px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h2>Easy<span style="color:#3478f6">PDF</span></h2>
+    <a href="/">Home</a>
+</header>
+
+<div class="container">
+
+    <h1>Photo to PDF</h1>
+
+    <p style="text-align:center">
+        Upload, crop and convert your photos into PDF.
+    </p>
+
+    <div class="upload-box">
+        <h3>Select Your Photo</h3>
+        <input type="file" id="fileInput" accept="image/*">
+    </div>
+
+    <div class="preview">
+        <img id="image" style="display:none">
+    </div>
+
+    <div style="text-align:center">
+
+        <button onclick="rotateImage()">Rotate</button>
+
+        <button onclick="addPhoto()">
+            Add Cropped Photo
+        </button>
+
+    </div>
+
+    <h3>Selected Photos</h3>
+
+    <div class="photos" id="photoList"></div>
+
+    <div style="text-align:center">
+        <button onclick="downloadPDF()" id="downloadBtn" disabled>
+            Download PDF
+        </button>
+    </div>
+
+    <p style="text-align:center">
+        <a href="/" class="back">← Back to Home</a>
+    </p>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+
+let cropper;
+let photos = [];
+
+const fileInput = document.getElementById("fileInput");
+const image = document.getElementById("image");
+
+fileInput.addEventListener("change", function(event) {
+
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+        alert("Please select an image file.");
+        return;
+    }
+
+    if (cropper) {
+        cropper.destroy();
+    }
+
+    image.src = URL.createObjectURL(file);
+    image.style.display = "block";
+
+    image.onload = function() {
+
+        cropper = new Cropper(image, {
+            viewMode: 1,
+            autoCropArea: 0.9,
+            responsive: true
+        });
+
+    };
+
+});
+
+function rotateImage() {
+
+    if (cropper) {
+        cropper.rotate(90);
+    } else {
+        alert("Please upload a photo first.");
+    }
+
+}
+
+function addPhoto() {
+
+    if (!cropper) {
+        alert("Please upload a photo first.");
+        return;
+    }
+
+    const canvas = cropper.getCroppedCanvas({
+        maxWidth: 2000,
+        maxHeight: 2000
+    });
+
+    if (!canvas) {
+        alert("Unable to crop this photo.");
+        return;
+    }
+
+    photos.push(canvas.toDataURL("image/jpeg", 0.95));
+
+    displayPhotos();
+
+    cropper.destroy();
+    cropper = null;
+
+    image.style.display = "none";
+    fileInput.value = "";
+
+}
+
+function displayPhotos() {
+
+    const list = document.getElementById("photoList");
+
+    list.innerHTML = "";
+
+    photos.forEach(function(photo, index) {
+
+        const div = document.createElement("div");
+
+        div.className = "photo-item";
+
+        const img = document.createElement("img");
+        img.src = photo;
+
+        const text = document.createElement("p");
+        text.textContent = "Photo " + (index + 1);
+
+        const button = document.createElement("button");
+        button.textContent = "Remove";
+
+        button.onclick = function() {
+            photos.splice(index, 1);
+            displayPhotos();
+        };
+
+        div.appendChild(img);
+        div.appendChild(text);
+        div.appendChild(button);
+
+        list.appendChild(div);
+
+    });
+
+    document.getElementById("downloadBtn").disabled =
+        photos.length === 0;
+
+}
+
+async function downloadPDF() {
+
+    if (photos.length === 0) {
+        alert("Please add photos first.");
+        return;
+    }
+
+    const { jsPDF } = window.jspdf;
+
+    const pdf = new jsPDF("p", "mm", "a4");
+
+    for (let i = 0; i < photos.length; i++) {
+
+        if (i > 0) {
+            pdf.addPage();
+        }
+
+        const properties = pdf.getImageProperties(photos[i]);
+
+        const pageWidth = 210;
+        const pageHeight = 297;
+
+        const margin = 10;
+
+        const maxWidth = pageWidth - margin * 2;
+        const maxHeight = pageHeight - margin * 2;
+
+        const ratio = Math.min(
+            maxWidth / properties.width,
+            maxHeight / properties.height
+        );
+
+        const width = properties.width * ratio;
+        const height = properties.height * ratio;
+
+        const x = (pageWidth - width) / 2;
+        const y = (pageHeight - height) / 2;
+
+        pdf.addImage(
+            photos[i],
+            "JPEG",
+            x,
+            y,
+            width,
+            height
+        );
+
+    }
+
+    pdf.save("EasyPDF-Photos.pdf");
+
+}
+
+</script>
+
+</body>
+</html>
